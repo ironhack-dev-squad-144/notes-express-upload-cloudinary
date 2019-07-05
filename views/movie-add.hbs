@@ -1,0 +1,47 @@
+<h2>Upload a new Movie</h2>
+
+{{!-- Post form with enctype="multipart/form-data" (to send files) --}}
+<form action="/movie/add" method="post" enctype="multipart/form-data">
+  {{!-- This input to define a req.body.title --}}
+  <label>Title</label>
+  <input type="text" name="title">
+  <br>
+
+  {{!-- This input to define a req.body.description --}}
+  <label>Description</label>
+  <input type="text" name="description">
+  <br>
+
+  {{!-- This input to define a req.file, because of `uploadCloud.single("photo")`in routes/index.js --}}
+  <label>Poster</label>
+  <input type="file" name="photo">
+  <br>
+
+  <input type="submit" value="SAVE">
+</form>
+
+<br><br>
+<div class="error"></div>
+
+
+<script src="/javascripts/movie-add.js"></script>
+<script>
+  let $form = document.querySelector('form')
+  let $error = document.querySelector('.error')
+  let $titleInput = document.querySelector('input[name=title]')
+
+  $form.onsubmit = checkTitleAndDisplayPotentialError
+  // $titleInput.onkeyup = checkTitleAndDisplayPotentialError
+  // checkTitleAndDisplayPotentialError()
+
+  function checkTitleAndDisplayPotentialError(event) {
+    console.log("The title was changed", $titleInput.value)
+    if ($titleInput.value === "") {
+      if (event) event.preventDefault()
+      $error.innerHTML = "Please enter a title"
+    }
+    else {
+      $error.innerHTML = ""
+    }
+  }
+</script>
